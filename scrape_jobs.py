@@ -7,7 +7,7 @@ import time
 browser = webdriver.Chrome()
 
 # URL of the Indeed job search results
-url = f"https://www.indeed.com/jobs?q=software+developer&l=Lynnwood%2C+WA&sc=0kf%3Aattr%28FCGTU%7CHFDVW%7CQJZM9%7CUTPWG%252COR%29%3B&radius=10&vjk=77a57a3b8d3120c5"
+url = f"https://www.indeed.com/jobs?q=software+developer&l=Lynnwood%2C+WA&from=searchOnHP&vjk=46875250593820e9"
 
 # Navigate to the website
 browser.get(url)
@@ -20,13 +20,20 @@ browser.find_element(By.TAG_NAME, "body").send_keys(Keys.END)
 time.sleep(2)  # Wait again for the new listings to load
 
 # Find and extract job titles
-job_titles = browser.find_elements(
-    By.XPATH, '//*[@id="mosaic-provider-jobcards"]/ul'
-)
+job_titles = browser.find_elements(By.CLASS_NAME, "jobTitle")
+job_locations = browser.find_elements(By.CLASS_NAME, "company_location")
+print("\nSOFTWARE DEVELOPER JOBS\n================\n")
+i = 0
 
 # Loop through the found elements and print their text
-for title in job_titles:
-    print(title.text)
+for job_element in job_titles:
+    print(i)
+    print("JOB TITLE:", job_element.text)
+    print("JOB COMPANY AND LOCATION:", job_locations[i].text)
+    print()
+    print()
+
+    i += 1
 
 # Close the browser when you're done
 browser.quit()
